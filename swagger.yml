@@ -12,157 +12,113 @@ info:
 host: "petstore.swagger.io"
 basePath: "/v2"
 tags:
-  - name: "event"
-    description: "Operations about events"
-    externalDocs:
-      description: "Find out more about our events"
-      url: "http://swagger.io"
+  - name: empty
+    description: ---
 schemes:
-  - "https"
-  - "http"
+  - https
+  - http
 paths:
-  /event:
-    post:
-      tags:
-        - "event"
-      summary: "Add a new event the store"
-      description: ""
-      operationId: "addEvent"
-      consumes:
-        - "application/json"
-        - "application/xml"
-      produces:
-        - "application/xml"
-        - "application/json"
-      parameters:
-        - in: "body"
-          name: "body"
-          description: "Event object that needs to be added to the store"
-          required: true
-          schema:
-            $ref: "#/definitions/Event"
-      responses:
-        "405":
-          description: "Invalid input"
-      security:
-        - eventstore_auth:
-            - "write:events"
-            - "read:events"
-  /event/{eventId}:
-    put:
-      tags:
-        - "event"
-      summary: "Update an existing event"
-      description: ""
-      operationId: "update"
-      consumes:
-        - "application/json"
-        - "application/xml"
-      produces:
-        - "application/xml"
-        - "application/json"
-      parameters:
-        - name: "eventId"
-          in: "path"
-          description: "ID of event to return"
-          required: true
-          type: "integer"
-          format: "int64"
-        - in: "body"
-          name: "body"
-          description: "Event object that needs to be added to the store"
-          required: true
-          schema:
-            $ref: "#/definitions/Event"
-      responses:
-        "400":
-          description: "Invalid ID supplied"
-        "404":
-          description: "Event not found"
-        "405":
-          description: "Validation exception"
-      security:
-        - eventstore_auth:
-            - "write:events"
-            - "read:events"
-    get:
-      tags:
-        - "event"
-      summary: "Find event by ID"
-      description: "Returns a single event"
-      operationId: "getEventById"
-      produces:
-        - "application/json"
-      parameters:
-        - name: "eventId"
-          in: "path"
-          description: "ID of event to return"
-          required: true
-          type: "integer"
-          format: "int64"
-      responses:
-        "200":
-          description: "successful operation"
-          schema:
-            $ref: "#/definitions/Event"
-        "400":
-          description: "Invalid ID supplied"
-        "404":
-          description: "Event not found"
-      security:
-        - api_key: []
-    delete:
-      tags:
-        - "event"
-      summary: "Delete an event"
-      description: ""
-      operationId: "deleteEvevt"
-      produces:
-        - "application/json"
-      parameters:
-        - name: "api_key"
-          in: "header"
-          required: false
-          type: "string"
-        - name: "eventId"
-          in: "path"
-          description: "Event id to delete"
-          required: true
-          type: "integer"
-          format: "int64"
-      responses:
-        "400":
-          description: "Invalid ID supplied"
-        "404":
-          description: "Event not found"
-      security:
-        - eventstore_auth:
-            - "write:events"
-            - "read:events"
-securityDefinitions:
-  eventstore_auth:
-    type: "oauth2"
-    authorizationUrl: "http://petstore.swagger.io/oauth/dialog"
-    flow: "implicit"
-    scopes:
-      write:events: "modify events in your account"
-      read:events: "read your events"
-  api_key:
-    type: "apiKey"
-    name: "api_key"
-    in: "header"
+
 definitions:
-  Event:
-    type: "object"
+  Token:
+    type: object
     properties:
-      id:
-        type: "integer"
-        format: "int64"
-      name:
-        type: "string"
-      date:
-        type: "string"
-        format: "date-time"
+      Id:
+        type: integer
+      Token:
+        type: string
+      Waznosc:
+        type: string
+        format: data-time
+    xml:
+      name: Token
+
+  Administrator:
+    type: object
+    properties:
+      Prawa:
+        type: string
+    xml:
+      name: Administrator
+
+  Uzytkownik:
+    type: object
+    properties:
+      Id:
+        type: integer
+      Imie:
+        type: string
+      Nazwisko:
+        type: string
+      Login:
+        type: string
+      Haslo:
+        type: string
+      Email:
+        type: string
+    xml:
+      name: Uzytkownik
+
+  Galeria:
+    type: object
+    properties:
+      Id:
+        type: integer
+      Tytul:
+        type: string
+      Opis:
+        type: string
+      Data:
+        type: string
+        format: data-time
+      Widocznosc:
+        format: boolean
+        default: true
+
+  Tag:
+    type: object
+    properties:
+      Id:
+        type: integer
+      Tekst:
+        type: string
+
+  Obraz:
+    type: object
+    properties:
+      Id:
+        type: string
+      Tytul:
+        type: string
+      Opis:
+        type: string
+      Data:
+        type: string
+        format: data-time
+      Nazwa Pliku:
+        type: string
+      Sciezka:
+        type: string
+      Rozmiar:
+        type: integer
+
+  Miniaturka:
+    type: object
+    properties:
+      Typ:
+        type: string
+
+  Komentarz:
+    type: object
+    properties:
+      Id:
+        type: string
+      Tresc:
+        type: string
+      Data:
+        type: string
+        format: data-time
+
 externalDocs:
   description: "Find out more about Swagger"
   url: "http://swagger.io"
