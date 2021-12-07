@@ -4,8 +4,13 @@ const config = require('./config/Configurator')();
 const cors = require('cors');
 
 const BodyParserMiddleware = require('./utils/middleware/BodyParserMiddleware');
+const {MongoDB} = require("./db/MongoDB");
+
 const {UserService} = require("./services/UserService");
+const {TagService} = require("./services/TagService");
+
 const {UserRestController} = require("./rest-controllers/UserRestController");
+const {TagController} = require("./rest-controllers/TagController");
 
 class WebServer{
     app;
@@ -20,8 +25,9 @@ class WebServer{
         const app = this.app;
 
         this.loadConfig(app);
+        this.loadDB();
         this.loadServices();
-        this.loadRestControllers(app);
+        this.loadControllers(app);
 
         app.listen(this.port);
         console.log(`========================================`);
@@ -50,12 +56,19 @@ class WebServer{
         app.use(cookieParser());
     }
 
-    loadServices(){
-        new UserService();
+    loadDB = () => {
+        new MongoDB();
+        MongoDB.instance.connect();
     }
 
-    loadRestControllers(app){
+    loadServices(){
+        new UserService();
+        new TagService();
+    }
+
+    loadControllers(app){
         new UserRestController(app);
+        new TagController(app);
     }
 }
 

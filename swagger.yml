@@ -20,102 +20,102 @@ schemes:
 paths:
 
 definitions:
-  Token:
+  token:
     type: object
     properties:
-      Id:
+      id:
         type: integer
-      Token:
+      token:
         type: string
-      Waznosc:
+      endDate:
         type: string
         format: data-time
     xml:
       name: Token
 
-  Administrator:
+  admin:
     type: object
     properties:
-      Prawa:
+      roles:
         type: string
     xml:
       name: Administrator
 
-  Uzytkownik:
+  user:
     type: object
     properties:
-      Id:
+      id:
         type: integer
-      Imie:
+      name:
         type: string
-      Nazwisko:
+      surname:
         type: string
-      Login:
+      login:
         type: string
-      Haslo:
+      password:
         type: string
-      Email:
+      email:
         type: string
     xml:
       name: Uzytkownik
 
-  Galeria:
+  galery:
     type: object
     properties:
-      Id:
+      id:
         type: integer
-      Tytul:
+      title:
         type: string
-      Opis:
+      description:
         type: string
-      Data:
+      date:
         type: string
         format: data-time
-      Widocznosc:
+      display:
         format: boolean
         default: true
 
   Tag:
     type: object
     properties:
-      Id:
+      id:
         type: integer
-      Tekst:
+      description:
         type: string
 
-  Obraz:
+  Picture:
     type: object
     properties:
-      Id:
+      id:
         type: string
-      Tytul:
+      title:
         type: string
-      Opis:
+      description:
         type: string
-      Data:
+      date:
         type: string
         format: data-time
-      Nazwa Pliku:
+      filename:
         type: string
-      Sciezka:
+      path:
         type: string
-      Rozmiar:
+      size:
         type: integer
 
-  Miniaturka:
+  icon:
     type: object
     properties:
-      Typ:
+      type:
         type: string
 
-  Komentarz:
+  comment:
     type: object
     properties:
-      Id:
+      id:
         type: string
-      Tresc:
+      content:
         type: string
-      Data:
+      date:
         type: string
         format: data-time
 
