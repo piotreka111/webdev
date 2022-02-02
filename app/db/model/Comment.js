@@ -6,6 +6,12 @@ const CommentSchema = new mongoose.Schema({
     },
     date: {
         type: Date
+    },
+    user: {
+        type: String
+    },
+    pictureId: {
+        type: String
     }
 });
 

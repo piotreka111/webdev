@@ -25,13 +25,14 @@ class GalleryController {
             let result = {errorMessage: undefined};
             try {
                 const pictureId = req.query.delete;
+                const mode = req.query.mode;
                 let deleteData = {errorMessage: undefined};
                 if (pictureId) {
                     deleteData = await GalleryService.instance.deletePicture(pictureId, req?.user?.id);
                 }
                 result = {
                     ...deleteData,
-                    pictures: await GalleryService.instance.getAllPictures(req?.user?.id) || []
+                    pictures: await GalleryService.instance.getAllPictures(req?.user?.id, mode) || []
                 };
                 if (deleteData.errorMessage) {
                     result.errorMessage += ', ' + deleteData.errorMessage;
@@ -94,7 +95,23 @@ class GalleryController {
                 console.log(e);
                 result.errorMessage = e.message || 'Błąd';
             }
-            console.log(result)
+            res.render('gallery_view', result);
+        });
+
+        app.post(`${url}/:id`, authenticated, async function (req, res) {
+            let result = {errorMessage: undefined};
+            try {
+                const picId = req.params.id;
+                const dto = req.body;
+                let addData = await GalleryService.instance.addPictureComment(dto, picId, req?.user?.id);
+                result = {
+                    ...addData,
+                    ...await GalleryService.instance.getPictureViewById(picId, req?.user?.id)
+                };
+            } catch (e) {
+                console.log(e);
+                result.errorMessage = e.message || 'Błąd';
+            }
             res.render('gallery_view', result);
         });
 

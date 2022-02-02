@@ -1,4 +1,10 @@
-<h1>Podgląd: <%= title %></h1>
+<h1>Podgląd: <%= picture.title %></h1>
+
+<img src="<%= picture.image %>" /> <br/>
+<strong><%= picture.title %></strong><br/>
+<a href="/gallery?delete=<%= picture.id %>">del</a>
+<a href="/gallery/edit/<%= picture.id %>">update</a><br/><br/>
+
 
 <% if(typeof errorMessage != 'undefined') { %>
     <%= errorMessage %>
@@ -7,8 +13,20 @@
 <% if(typeof successMessage != 'undefined') { %>
     <%= successMessage %>
 <% } %>
+<br/><br/>
 
-<img src="<%= image %>" /> <br/>
-<strong><%= title %></strong><br/>
-<a href="/gallery?delete=<%= id %>">del</a>
-<a href="/gallery/edit/<%= id %>">update</a><br/><br/>
+<form method="post" action="/gallery/<%=picture.id%>">
+    <h4>Dodaj komentarz</h4>
+    <input type="textarea" name="content" />
+    <input type="submit" value="dodaj" />
+</form>
+
+<% if(typeof comments != 'undefined') { %>
+    <div>
+        <hr/>
+        <% comments.forEach(comment => { %>
+            <%=comment.user%><br/>
+            <%=comment.content%><br/><br/>
+        <% }); %>
+    </div>
+<% } %>

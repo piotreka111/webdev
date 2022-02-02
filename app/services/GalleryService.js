@@ -31,13 +31,18 @@ class GalleryService{
         if(!pic && (pic.display || pic.userId !== userId)){
             return { errorMessage: 'Błąd podczas zapisu obrazka'}
         }
-        return pic;
+        const comments = await Comment.find({pictureId: pic.id});
+        return {picture: pic, comments: comments};
     }
 
-    getAllPictures = async (userId) => {
+    getAllPictures = async (userId, mode = undefined) => {
         let pictures;
         try{
-            pictures = await Galery.find({userId: userId});
+            if(mode === 'all'){
+                pictures = await Galery.find({$or:[{userId: userId},{display:true}]})
+            }else {
+                pictures = await Galery.find({userId: userId});
+            }
         }catch (ex){
             console.log(ex);
         }
@@ -60,6 +65,23 @@ class GalleryService{
         await picture.save();
 
         return {successMessage: 'Dodano zdjęcie'}
+    }
+
+    addPictureComment = async (dto, picId, userId) => {
+        const pic = await Galery.findById(picId);
+        const user = await User.findById(userId);
+        if(!pic || !user){
+            return { errorMessage: 'Błąd podczas zapisu komentarza'}
+        }
+
+        const comment = new Comment({
+           content: dto.content,
+           pictureId: pic.id,
+           date: new Date(),
+           user: user.login
+        });
+        await comment.save();
+        return { successMessage: 'dodano komentarz'}
     }
 
     updatePicture = async (dto, picId, userId) => {
