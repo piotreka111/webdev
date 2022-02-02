@@ -1,0 +1,17 @@
+<div>
+    <h1>Rejestracja</h1>
+    <% if(typeof errorMessage != 'undefined') { %>
+        <%= errorMessage %>
+    <% } %>
+
+    <% if(typeof successMessage != 'undefined') { %>
+        <%= successMessage %>
+    <% } %>
+
+    <form method="post" action="/auth/signup">
+        login: <input type="text" name="login"/>
+        email: <input type="text" name="email"/>
+        pass: <input type="password" name="password"/>
+        <input type="submit" />
+    </form>
+</div>

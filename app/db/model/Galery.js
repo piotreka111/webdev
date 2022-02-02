@@ -7,11 +7,17 @@ const GalerySchema = new mongoose.Schema({
     description: {
         type: String
     },
+    image: {
+        type: String
+    },
     date: {
         type: Date
     },
     display:{
         type: Boolean
+    },
+    userId:{
+        type: String
     }
 });
 

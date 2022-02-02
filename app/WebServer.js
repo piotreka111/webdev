@@ -6,9 +6,14 @@ const cors = require('cors');
 const BodyParserMiddleware = require('./utils/middleware/BodyParserMiddleware');
 const {MongoDB} = require("./db/MongoDB");
 
+const {GalleryService} = require("./services/GalleryService");
+const {AuthenticationService} = require("./services/AuthenticationService");
 const {UserService} = require("./services/UserService");
 const {TagService} = require("./services/TagService");
 
+const {GalleryController} = require("./rest-controllers/GalleryController");
+const {HomepageController} = require("./rest-controllers/HomepageController");
+const {AuthenticationController} = require("./rest-controllers/AuthenticationController");
 const {UserRestController} = require("./rest-controllers/UserRestController");
 const {TagController} = require("./rest-controllers/TagController");
 
@@ -41,18 +46,13 @@ class WebServer{
             origin: config.cors.server
         }));
 
+        const layouts = require('express-ejs-layouts');
+        app.use(layouts);
+        app.set('view engine', 'ejs');
 
-        app.use(function (req, res, next){
-            res.header('Content-Type', 'application/json;charset=UTF-8')
-            res.header('Access-Control-Allow-Credentials', true)
-            res.header(
-                'Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept'
-            );
-            next();
-        })
         app.use(BodyParserMiddleware.bodyParserJsonException);//do wyjatkow blednego parsowania json
         app.use(bodyParser.json()); // do parsowania rest
-
+        app.use(bodyParser.urlencoded({extended: true}))
         app.use(cookieParser());
     }
 
@@ -63,12 +63,17 @@ class WebServer{
 
     loadServices(){
         new UserService();
+        new AuthenticationService();
         new TagService();
+        new GalleryService();
     }
 
     loadControllers(app){
+        new HomepageController(app);
+        new AuthenticationController(app);
         new UserRestController(app);
         new TagController(app);
+        new GalleryController(app);
     }
 }
 

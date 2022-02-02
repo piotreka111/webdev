@@ -20,8 +20,6 @@ const bodyParserJsonException = function (req, res, next) {
     })
 };
 
-
-
 module.exports = {
   bodyParserJsonException: bodyParserJsonException
 };

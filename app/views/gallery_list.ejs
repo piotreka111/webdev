@@ -1,0 +1,22 @@
+<h1>Galeria</h1>
+<a href="/gallery/add">Dodaj</a>
+<a href="/gallery?mode=all">Wyświetl wszystkie</a>
+
+<% if(typeof errorMessage != 'undefined') { %>
+    <%= errorMessage %>
+<% } %>
+
+<% if(typeof successMessage != 'undefined') { %>
+    <%= successMessage %>
+<% } %>
+
+<% if(typeof pictures != 'undefined') { %>
+    <div>
+        <% pictures.forEach(picture => { %>
+            <img src="<%= picture.image %>" /> <br/>
+            <a href="/gallery/<%=picture.id%>"<strong><%= picture.title %></strong></a><br/>
+            <a href="/gallery?delete=<%= picture.id %>">del</a>
+            <a href="/gallery/edit/<%= picture.id %>">update</a><br/><br/>
+        <% }); %>
+    </div>
+<% } %>

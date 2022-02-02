@@ -3,7 +3,6 @@ const Tag = require("../db/model/Tag");
 const Comment = require("../db/model/Comment");
 const Admin = require("../db/model/Admin");
 const Galery = require("../db/model/Galery");
-const Picture = require("../db/model/Picture");
 const Token = require("../db/model/Token");
 const User = require("../db/model/User");
 
@@ -45,13 +44,24 @@ class TagService{
         }
     }
 
-    getTagById = async (id) => {
+    getAllTags = async () => {
+        let tags;
         try{
-            // await this.test(id);
+            tags = await Tag.find();
         }catch (ex){
             console.log(ex);
         }
-        return mockTags.find(u => u.id === +id);
+        return tags;
+    }
+
+    getTagById = async (id) => {
+        let tag;
+        try{
+            tag = await Tag.findById(id);
+        }catch (ex){
+            console.log(ex);
+        }
+        return tag;
     }
 
     updateTag = (id, dto) => {
@@ -73,12 +83,21 @@ class TagService{
         return tag;
     }
 
-    deleteTag = (id) => {
-        const index = mockTags.findIndex(u => u.id === id);
-        if (index !== -1) {
-            mockTags.splice(index, 1);
+    deleteTag = async (id) => {
+        let result = {};
+        try {
+            const tag = await Tag.findById(id);
+            if(tag){
+                await Tag.deleteOne({_id: id});
+                result.message = "usunięto tag";
+                result.tag = tag;
+            }else {
+                result.message = "nie odnaleziono tagu o id " + id;
+            }
+        } catch (ex) {
+            console.log(ex);
         }
-        return {content: "Tag deleted"};
+        return result;
     }
 }
 

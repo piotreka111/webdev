@@ -1,5 +1,10 @@
 {
   "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "express-ejs-layouts": "^2.5.1",
+    "express-handlebars": "^6.0.2",
+    "hbs": "^4.2.0",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.0.15"
   }
 }

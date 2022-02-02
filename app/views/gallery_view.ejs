@@ -1,0 +1,14 @@
+<h1>Podgląd: <%= title %></h1>
+
+<% if(typeof errorMessage != 'undefined') { %>
+    <%= errorMessage %>
+<% } %>
+
+<% if(typeof successMessage != 'undefined') { %>
+    <%= successMessage %>
+<% } %>
+
+<img src="<%= image %>" /> <br/>
+<strong><%= title %></strong><br/>
+<a href="/gallery?delete=<%= id %>">del</a>
+<a href="/gallery/edit/<%= id %>">update</a><br/><br/>

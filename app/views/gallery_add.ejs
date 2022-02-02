@@ -1,0 +1,17 @@
+<h1>Dodaj zdjęcie</h1>
+
+<% if(typeof errorMessage != 'undefined') { %>
+    <%= errorMessage %>
+<% } %>
+
+<% if(typeof successMessage != 'undefined') { %>
+    <%= successMessage %>
+<% } %>
+
+<form method="post" action="/gallery/add">
+    title <input type="text" name="title"/><br/>
+    description <input type="text" name="description"/><br/>
+    display <input type="checkbox" name="display"/><br/>
+    image <input type="text" name="image"/><br/>
+    <input type="submit"/>
+</form>

@@ -1,5 +1,6 @@
 const {TagService} = require("../services/TagService");
 const {TagDTO} = require("../services/dto/TagDTO");
+const {authenticated} = require("../utils/middleware/AuthMiddleware");
 
 class TagController {
     static instance;
@@ -19,6 +20,42 @@ class TagController {
 
     initRoutes(app, url){
 
+        app.get(`${url}`, authenticated, async function (req, res) {
+            let result;
+            try {
+                result = await TagService.instance.getAllTags();
+            } catch (e) {
+                result.message = e.message;
+                res.status(400);
+                console.log(e.message);
+            }
+            res.render('tag_list', {
+                tags: result
+            });
+        });
+
+        app.post(`${url}`, authenticated, async function (req, res) {
+            console.log("delete")
+            let result = new TagDTO();
+            try {
+                const id = req.query.delete;
+                const deletedTagResult = await TagService.instance.deleteTag(id);
+                const tags = await TagService.instance.getAllTags();
+                result = {
+                    tags: tags,
+                    deleteResult: deletedTagResult
+                }
+            } catch (e) {
+                result.message = e.message;
+                res.status(400);
+                console.log(e.message);
+            }
+            res.render('tag_list', {
+                tags: result
+            });
+        });
+
+
         app.get(`${url}/:id`, async function (req, res) {
             let result;
             try {
@@ -29,7 +66,9 @@ class TagController {
                 res.status(400);
                 console.log(e.message);
             }
-            res.send(result);
+            res.render('tag', {
+                tag: result
+            });
         });
 
         app.put(`${url}/:id`, async function (req, res) {
@@ -58,20 +97,6 @@ class TagController {
             }
             res.send(result);
         });
-
-        app.delete(`${url}/:id`, async function (req, res) {
-            let result = new TagDTO();
-            try {
-                const {id} = req.params;
-                result = TagService.instance.deleteTag(id);
-            } catch (e) {
-                result.message = e.message;
-                res.status(400);
-                console.log(e.message);
-            }
-            res.send(result);
-        });
-
     }
 }
 
