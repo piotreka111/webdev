@@ -58,7 +58,12 @@ class GalleryController {
                 console.log(e);
                 result.errorMessage = e.message || 'Błąd';
             }
-            res.render('gallery_add', result);
+
+            if(result.errorMessage === undefined) {
+                res.redirect('/gallery')
+            }else {
+                req.render('gallery_add', result);
+            }
         });
 
         app.get(`${url}/edit/:id`, authenticated, async function (req, res) {
@@ -75,15 +80,20 @@ class GalleryController {
 
         app.post(`${url}/edit/:id`, authenticated, async function (req, res) {
             let result = {errorMessage: undefined};
+            let picId;
             try {
                 const dto = req.body;
-                const picId = req.params.id
+                picId = req.params.id
                 result = await GalleryService.instance.updatePicture(dto, picId, req?.user?.id);
             } catch (e) {
                 console.log(e);
                 result.errorMessage = e.message || 'Błąd';
             }
-            res.redirect('/gallery')
+            if(result.errorMessage === undefined) {
+                res.redirect(`/gallery/${picId}`)
+            }else {
+                req.render('gallery_edit', result);
+            }
         });
 
         app.get(`${url}/:id`, async function (req, res) {

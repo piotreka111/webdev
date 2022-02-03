@@ -1,16 +1,44 @@
-
 <div>
-    <h1>Logowanie</h1>
-    <% if(typeof errorMessage != 'undefined') { %>
-        <%= errorMessage %>
-    <% } %>
+    <div class="album py-5 bg-light">
+        <div class="container">
+            <div class="row">
+                <h1>Logowanie</h1>
 
-    <% if(typeof successMessage != 'undefined') { %>
-        <%= successMessage %>
-    <% } %>
-    <form method="post" action="/auth/signin">
-        <input type="text" name="login"/>
-        <input type="password" name="password" />
-        <input type="submit" />
-    </form>
+                <% if(typeof errorMessage != 'undefined') { %>
+                    <div class="alert alert-danger">
+                        <%= errorMessage %>
+                    </div>
+                <% } %>
+
+                <% if(typeof successMessage != 'undefined') { %>
+                    <div class="alert alert-success">
+                        <%= successMessage %>
+                    </div>
+                <% } %>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <form action="/auth/signin" method="post">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Login</label>
+                            <input type="text" name="login" class="form-control" id="exampleInputEmail1"
+                                   aria-describedby="emailHelp" placeholder="Enter email">
+                            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
+                                else.</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Password</label>
+                            <input type="password" name="password" class="form-control" id="exampleInputPassword1"
+                                   placeholder="Password">
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                            <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

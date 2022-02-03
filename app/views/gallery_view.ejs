@@ -1,32 +1,64 @@
-<h1>Podgląd: <%= picture.title %></h1>
+<div class="album py-5 bg-light">
+    <div class="container">
 
-<img src="<%= picture.image %>" /> <br/>
-<strong><%= picture.title %></strong><br/>
-<a href="/gallery?delete=<%= picture.id %>">del</a>
-<a href="/gallery/edit/<%= picture.id %>">update</a><br/><br/>
+        <div class="row">
+            <div class="card">
+                <div class="card-body">
+                    <div class="col-md-12">
+                        <img src="<%= picture.image %>" class="img-fluid"/> <br/>
+                        <div class="card-body">
+                            <strong>Title: <%= picture.title %></strong>
+                            <p class="card-text"><%= picture.description %></p>
+                            <small class="text-muted"><%= picture.date %></small>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    <a href="/gallery/edit/<%= picture.id %>" type="button"
+                                       class="btn btn-sm btn-outline-info">Edit</a>
+                                    <a href="/gallery?delete=<%= picture.id %>" type="button"
+                                       class="btn btn-sm btn-outline-danger">Delete</a>
+                                </div>
+                                <small class="text-muted">
+                                    <a href="/gallery" type="button"
+                                       class="btn btn-sm btn-outline-secondary">back</a>
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
+        <div class="row">
+            <div class="card">
+                <div class="card-body">
 
-<% if(typeof errorMessage != 'undefined') { %>
-    <%= errorMessage %>
-<% } %>
+                    <form method="post" action="/gallery/<%= picture.id %>">
+                        <h4>Dodaj komentarz</h4>
+                        <input type="textarea" name="content"/>
+                        <input type="submit" value="dodaj"/>
+                    </form>
 
-<% if(typeof successMessage != 'undefined') { %>
-    <%= successMessage %>
-<% } %>
-<br/><br/>
+                    <% if(typeof errorMessage != 'undefined') { %>
+                        <%= errorMessage %>
+                    <% } %>
 
-<form method="post" action="/gallery/<%=picture.id%>">
-    <h4>Dodaj komentarz</h4>
-    <input type="textarea" name="content" />
-    <input type="submit" value="dodaj" />
-</form>
+                    <% if(typeof successMessage != 'undefined') { %>
+                        <%= successMessage %>
+                    <% } %>
 
-<% if(typeof comments != 'undefined') { %>
-    <div>
-        <hr/>
-        <% comments.forEach(comment => { %>
-            <%=comment.user%><br/>
-            <%=comment.content%><br/><br/>
-        <% }); %>
+                    <% if(typeof comments != 'undefined') { %>
+                        <% comments.forEach(comment => { %>
+                            <div class="card">
+                                <div class="card-body">
+                                    <strong><%= comment.user %></strong>
+                                    <p><%= comment.content %></p>
+                                </div>
+                            </div>
+                        <% }); %>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+
     </div>
-<% } %>
+</div>

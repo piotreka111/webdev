@@ -58,7 +58,7 @@ class GalleryService{
             title: dto.title,
             description: dto.description,
             image: dto.image,
-            date: new Date(),
+            date: new Date().toLocaleDateString() +" "+ new Date().toLocaleTimeString(),
             display: !!dto.display,
             userId: userId,
         })
@@ -97,7 +97,8 @@ class GalleryService{
         pic.title = dto.title;
         pic.description = dto.description;
         pic.image = dto.image;
-        pic.date = dto.date;
+        pic.date = `${new Date().toLocaleDateString() + ' ' + new Date().toLocaleTimeString()}`;
+        console.log(pic.date)
         pic.display = !!dto.display;
         await pic.save();
 
