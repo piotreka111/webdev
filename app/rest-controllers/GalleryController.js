@@ -62,7 +62,7 @@ class GalleryController {
             if(result.errorMessage === undefined) {
                 res.redirect('/gallery')
             }else {
-                req.render('gallery_add', result);
+                res.render('gallery_add', result);
             }
         });
 

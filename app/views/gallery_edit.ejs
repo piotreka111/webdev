@@ -1,17 +1,58 @@
-<h1>Dodaj zdjęcie</h1>
+<div class="album py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="card">
+                <div class="card-body">
+                    <div class="col-md-12">
+                        <div class="card-body">
+                            <h1>Edytuj zdjęcie</h1>
+                            <a href="/gallery" class="btn btn-primary">Powrót do listy</a>
 
-<% if(typeof errorMessage != 'undefined') { %>
-    <%= errorMessage %>
-<% } %>
+                            <% if(typeof errorMessage != 'undefined') { %>
+                                <div class="alert alert-danger">
+                                    <%= errorMessage %>
+                                </div>
+                            <% } %>
 
-<% if(typeof successMessage != 'undefined') { %>
-    <%= successMessage %>
-<% } %>
+                            <% if(typeof successMessage != 'undefined') { %>
+                                <div class="alert alert-success">
+                                    <%= successMessage %>
+                                </div>
+                            <% } %>
 
-<form method="post" action="/gallery/edit/<%=id%>">
-    title <input type="text" value="<%=title%>" name="title"/><br/>
-    description <input type="text" value="<%=description%>" name="description"/><br/>
-    display <input type="checkbox" <% if( display !== false) {%> checked <%}%> name="display"/><br/>
-    image <input type="text" value="<%=image%>"  name="image"/><br/>
-    <input type="submit"/>
-</form>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <form action="/gallery/edit/<%= id %>" method="post">
+                                        <div class="form-group">
+                                            <label>Tytuł</label>
+                                            <input type="text" name="title" value="<%=title%>" class="form-control"
+                                                   placeholder="Tytuł">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Opis</label>
+                                            <input type="text" name="description" value="<%=description%>" class="form-control"
+                                                   placeholder="Opis">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>URL Obrazka</label>
+                                            <input type="text" name="image" value="<%=image%>" class="form-control"
+                                                   placeholder="URL Obrazka">
+                                        </div>
+                                        <div class="form-check">
+                                            <input type="checkbox"
+                                            <% if( display !== false) { %> checked
+                                                    <% } %>
+                                                   class="form-check-input" name="display">
+                                            <label class="form-check-label" for="exampleCheck1">Publiczny</label>
+                                        </div>
+                                        <button type="submit" class="btn btn-success">Edytuj</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -6,9 +6,6 @@
     </div>
 </section>
 
-<a href="/gallery/add">Dodaj</a>
-<a href="/gallery?mode=all">Wyświetl wszystkie</a>
-
 <% if(typeof errorMessage != 'undefined') { %>
     <%= errorMessage %>
 <% } %>
@@ -20,35 +17,44 @@
 
 <div class="album py-5 bg-light">
     <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <a href="/gallery/add" type="button" class="btn btn-sm btn-outline-secondary">Dodaj</a>
+                <a href="/gallery?mode=all" class="btn btn-sm btn-outline-secondary">Wyświetl wszystkie</a>
+                <a href="/gallery" class="btn btn-sm btn-outline-secondary">Wyświetl moje</a>
+            </div>
+        </div>
+
+
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
 
             <% if(typeof pictures != 'undefined') { %>
                 <% pictures.forEach(picture => { %>
-                <div class="col-sm-3">
-                    <div class="card shadow-sm">
-                        <a href="/gallery/<%= picture.id %>">
-                            <img src="<%=picture.image%>" class="img-fluid" />
-                        </a>
+                    <div class="col-sm-3">
+                        <div class="card shadow-sm">
+                            <a href="/gallery/<%= picture.id %>">
+                                <img src="<%= picture.image %>" class="img-fluid"/>
+                            </a>
 
-                        <div class="card-body">
-                            <strong>Title: <%=picture.title%></strong>
-                            <p class="card-text"><%= picture.description %></p>
-                            <small class="text-muted"><%=picture.date%></small>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
-                                    <a href="/gallery/edit/<%= picture.id %>" type="button"
-                                       class="btn btn-sm btn-outline-info">Edit</a>
-                                    <a href="/gallery?delete=<%= picture.id %>" type="button"
-                                       class="btn btn-sm btn-outline-danger">Delete</a>
+                            <div class="card-body">
+                                <strong>Title: <%= picture.title %></strong>
+                                <p class="card-text"><%= picture.description %></p>
+                                <small class="text-muted"><%= picture.date %></small>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <a href="/gallery/edit/<%= picture.id %>" type="button"
+                                           class="btn btn-sm btn-outline-info">Edit</a>
+                                        <a href="/gallery?delete=<%= picture.id %>" type="button"
+                                           class="btn btn-sm btn-outline-danger">Delete</a>
+                                    </div>
+                                    <small class="text-muted">
+                                        <a href="/gallery/<%= picture.id %>" type="button"
+                                           class="btn btn-sm btn-outline-secondary">View</a>
+                                    </small>
                                 </div>
-                                <small class="text-muted">
-                                    <a href="/gallery/<%= picture.id %>" type="button"
-                                       class="btn btn-sm btn-outline-secondary">View</a>
-                                </small>
                             </div>
                         </div>
                     </div>
-                </div>
                 <% }); %>
             <% } %>
         </div>

@@ -98,7 +98,6 @@ class GalleryService{
         pic.description = dto.description;
         pic.image = dto.image;
         pic.date = `${new Date().toLocaleDateString() + ' ' + new Date().toLocaleTimeString()}`;
-        console.log(pic.date)
         pic.display = !!dto.display;
         await pic.save();
 
