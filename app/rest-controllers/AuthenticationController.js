@@ -1,5 +1,4 @@
 const {AuthenticationService} = require("../services/AuthenticationService");
-const cookie = require('cookie');
 
 class AuthenticationController {
     static instance;
@@ -24,7 +23,7 @@ class AuthenticationController {
         });
 
         app.post(`${url}/signin`, async function (req, res) {
-            let result;
+            let result = {message: undefined};
             try{
                 result = await AuthenticationService.instance.login(req.body)
             } catch (e) {
